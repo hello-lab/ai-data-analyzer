@@ -1,0 +1,8 @@
+node_modules/
+npm-debug.log*
+*.log
+.DS_Store
+*.tmp
+*.temp
+complex_metrics_report.txt
+processed_users_complex.csv
