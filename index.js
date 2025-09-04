@@ -2,16 +2,22 @@ const fs = require('fs');
 const csv = require('csv-parser');
 const _ = require('lodash');
 const { Parser } = require('json2csv');
-const { KMeans } = require('ml-kmeans');
+const { kmeans } = require('ml-kmeans');
 
 // Helper Functions
+function median(values) {
+  const sorted = values.slice().sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+}
+
 function stats(arr, key) {
   const values = arr.map(u => u[key]);
   return {
     avg: _.mean(values),
     min: _.min(values),
     max: _.max(values),
-    median: _.median(values),
+    median: median(values),
     stddev: Math.sqrt(_.mean(values.map(v => Math.pow(v - _.mean(values), 2)))),
   };
 }
@@ -47,8 +53,7 @@ fs.createReadStream('users.csv')
     );
 
     // 1. User Segmentation (KMeans, k=4)
-    const kmeans = new KMeans();
-    const clusters = kmeans.cluster(vectors, 4);
+    const clusters = kmeans(vectors, 4);
     processed.forEach((u, i) => { u.cluster = clusters.clusters[i]; });
 
     // 2. Engagement Index (weighted sum)
@@ -58,8 +63,11 @@ fs.createReadStream('users.csv')
 
     // 3. Activity Consistency Score (low stddev = high consistency)
     processed.forEach(u => {
-      const arr = [u.stepcount, u.pushup, u.squat];
-      u.activity_consistency = 1 / (1 + stats([u], 'stepcount').stddev + stats([u], 'pushup').stddev + stats([u], 'squat').stddev);
+      const activityValues = [u.stepcount, u.pushup, u.squat];
+      const mean = _.mean(activityValues);
+      const variance = _.mean(activityValues.map(v => Math.pow(v - mean, 2)));
+      const stddev = Math.sqrt(variance);
+      u.activity_consistency = 1 / (1 + stddev);
     });
 
     // 4. Outlier Detection (z-score for each metric, flag if any > 3 or < -3)
