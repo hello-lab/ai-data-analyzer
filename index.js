@@ -111,7 +111,49 @@ fs.createReadStream('users.csv')
       u.similar_user = nearest;
     });
 
-    // 7. Team-level Analytics
+    // 7. Challenge Assignment
+    // Assign challenges based on user's weakest performance area relative to their cluster
+    processed.forEach(u => {
+      // Get the centroid values for the user's cluster
+      const clusterCentroid = clusters.centroids[u.cluster];
+      const [centroidSteps, centroidPushup, centroidSquat] = clusterCentroid;
+      
+      // Calculate performance ratios compared to cluster average
+      const stepRatio = centroidSteps > 0 ? u.stepcount / centroidSteps : 0;
+      const pushupRatio = centroidPushup > 0 ? u.pushup / centroidPushup : 0;
+      const squatRatio = centroidSquat > 0 ? u.squat / centroidSquat : 0;
+      
+      // Find the area with the lowest performance ratio
+      const ratios = [
+        { type: 'steps', ratio: stepRatio },
+        { type: 'pushup', ratio: pushupRatio },
+        { type: 'squat', ratio: squatRatio }
+      ];
+      
+      // Sort by ratio to find the weakest area
+      ratios.sort((a, b) => a.ratio - b.ratio);
+      
+      // Assign challenge type based on weakest area
+      u.challenge_type = ratios[0].type;
+      
+      // Set deadline based on challenge difficulty (30 days + extra time for harder challenges)
+      const baseDeadlineDays = 30;
+      let extraDays = 0;
+      
+      // Add extra time based on how far below cluster average they are
+      const worstRatio = ratios[0].ratio;
+      if (worstRatio < 0.5) {
+        extraDays = 14; // Very low performance, give more time
+      } else if (worstRatio < 0.8) {
+        extraDays = 7; // Somewhat low performance, give some extra time
+      }
+      
+      const deadlineDate = new Date();
+      deadlineDate.setDate(deadlineDate.getDate() + baseDeadlineDays + extraDays);
+      u.deadline = deadlineDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    });
+
+    // 8. Team-level Analytics
     const teams = _.uniq(processed.map(u => u.team));
     const teamStats = teams.map(team => {
       const teamUsers = processed.filter(u => u.team === team);
@@ -126,7 +168,7 @@ fs.createReadStream('users.csv')
       };
     });
 
-    // 8. Behavioral Pattern: Do users with high balance also have high activity?
+    // 9. Behavioral Pattern: Do users with high balance also have high activity?
     const corrBalanceStep = (() => {
       const x = processed.map(u => u.balance);
       const y = processed.map(u => u.stepcount);
@@ -136,7 +178,7 @@ fs.createReadStream('users.csv')
       return (den === 0) ? 0 : num / den;
     })();
 
-    // 9. Summary Report
+    // 10. Summary Report
     let report = `
 COMPLEX AI METRICS REPORT
 =========================
@@ -162,6 +204,12 @@ Team Analytics:
 ${teamStats.map(t => `Team: ${t.team}, Avg Step: ${t.avgStep.toFixed(1)}, Avg Pushup: ${t.avgPushup.toFixed(1)}, Avg Squat: ${t.avgSquat.toFixed(1)}, Avg Balance: ${t.avgBalance.toFixed(1)}, Avg Engagement: ${t.engagement.toFixed(2)}, Members: ${t.members}`).join('\n')}
 
 Balance vs Stepcount Correlation: ${corrBalanceStep.toFixed(3)}
+
+Challenge Distribution:
+${['steps', 'pushup', 'squat'].map(type => `${type}: ${processed.filter(u => u.challenge_type === type).length} users`).join(', ')}
+
+Sample Challenge Assignments:
+${processed.slice(0,5).map(u => `${u.username}: ${u.challenge_type} (deadline: ${u.deadline})`).join(', ')}
 
 (See processed_users_complex.csv for full annotated data)
 `;
