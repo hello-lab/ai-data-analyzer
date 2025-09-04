@@ -79,4 +79,65 @@ try {
   console.log('✗ Output file test failed:', error.message);
 }
 
+// Test 5: Challenge assignment functionality
+console.log('\nTest 5: Challenge assignment functionality');
+try {
+  const csvContent = fs.readFileSync('processed_users_complex.csv', 'utf8');
+  const lines = csvContent.split('\n');
+  const headers = lines[0].split(',');
+  
+  // Check if challenge_type and deadline columns exist
+  const challengeTypeIndex = headers.findIndex(h => h.includes('challenge_type'));
+  const deadlineIndex = headers.findIndex(h => h.includes('deadline'));
+  
+  if (challengeTypeIndex === -1) {
+    console.log('✗ challenge_type column not found');
+  } else if (deadlineIndex === -1) {
+    console.log('✗ deadline column not found');
+  } else {
+    console.log('✓ Both challenge_type and deadline columns exist');
+    
+    // Check a few sample rows for valid challenge types and deadlines
+    let validChallenges = 0;
+    let validDeadlines = 0;
+    const validChallengeTypes = ['steps', 'pushup', 'squat'];
+    
+    for (let i = 1; i < Math.min(6, lines.length); i++) {
+      if (lines[i].trim()) {
+        const fields = lines[i].split(',');
+        const challengeType = fields[challengeTypeIndex]?.replace(/"/g, '');
+        const deadline = fields[deadlineIndex]?.replace(/"/g, '');
+        
+        if (validChallengeTypes.includes(challengeType)) {
+          validChallenges++;
+        }
+        
+        // Check if deadline is a valid date format (YYYY-MM-DD)
+        if (deadline && /^\d{4}-\d{2}-\d{2}$/.test(deadline)) {
+          validDeadlines++;
+        }
+      }
+    }
+    
+    console.log(`✓ ${validChallenges}/5 sample users have valid challenge types`);
+    console.log(`✓ ${validDeadlines}/5 sample users have valid deadline formats`);
+    
+    // Check distribution of challenge types
+    const challengeStats = { steps: 0, pushup: 0, squat: 0 };
+    for (let i = 1; i < lines.length; i++) {
+      if (lines[i].trim()) {
+        const fields = lines[i].split(',');
+        const challengeType = fields[challengeTypeIndex]?.replace(/"/g, '');
+        if (challengeStats.hasOwnProperty(challengeType)) {
+          challengeStats[challengeType]++;
+        }
+      }
+    }
+    
+    console.log(`✓ Challenge distribution: steps=${challengeStats.steps}, pushup=${challengeStats.pushup}, squat=${challengeStats.squat}`);
+  }
+} catch (error) {
+  console.log('✗ Challenge assignment test failed:', error.message);
+}
+
 console.log('\nAll tests completed!');
