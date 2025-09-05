@@ -31,3 +31,7 @@ dist/
 
 # OS
 Thumbs.db
+
+# Generated screenshots and temp files
+/tmp/
+/tmp/playwright-logs/

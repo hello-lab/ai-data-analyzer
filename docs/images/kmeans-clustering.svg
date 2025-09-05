@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #2c3e50; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #34495e; }
+      .user-point { fill: #3498db; stroke: #2980b9; stroke-width: 1; }
+      .cluster-0 { fill: #e74c3c; }
+      .cluster-1 { fill: #f39c12; }
+      .cluster-2 { fill: #27ae60; }
+      .cluster-3 { fill: #9b59b6; }
+      .centroid { fill: #2c3e50; stroke: white; stroke-width: 2; }
+      .axis { stroke: #7f8c8d; stroke-width: 1; }
+      .axis-label { font-family: Arial, sans-serif; font-size: 12px; fill: #7f8c8d; }
+      .grid { stroke: #ecf0f1; stroke-width: 0.5; }
+      .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50; }
+      .feature-box { fill: #ecf0f1; stroke: #bdc3c7; stroke-width: 1; rx: 4; }
+      .process-text { font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50; text-anchor: middle; }
+    </style>
+  </defs>
+  
+  <!-- Title -->
+  <text x="400" y="30" class="title">K-Means Clustering Visualization</text>
+  <text x="400" y="50" class="subtitle">User Segmentation based on Activity Metrics</text>
+  
+  <!-- Feature Extraction Box -->
+  <rect x="50" y="80" width="180" height="100" class="feature-box"/>
+  <text x="140" y="100" class="process-text">Feature Vector Creation</text>
+  <text x="140" y="120" class="process-text">[stepcount, pushup, squat, balance]</text>
+  <text x="140" y="140" class="process-text">Example:</text>
+  <text x="140" y="155" class="process-text">[10000, 150, 80, 120]</text>
+  <text x="140" y="170" class="process-text">→ Normalized for clustering</text>
+  
+  <!-- Main Clustering Visualization -->
+  <g transform="translate(280, 100)">
+    <!-- Grid lines -->
+    <line x1="0" y1="0" x2="400" y2="0" class="grid"/>
+    <line x1="0" y1="80" x2="400" y2="80" class="grid"/>
+    <line x1="0" y1="160" x2="400" y2="160" class="grid"/>
+    <line x1="0" y1="240" x2="400" y2="240" class="grid"/>
+    <line x1="0" y1="320" x2="400" y2="320" class="grid"/>
+    
+    <line x1="0" y1="0" x2="0" y2="320" class="grid"/>
+    <line x1="100" y1="0" x2="100" y2="320" class="grid"/>
+    <line x1="200" y1="0" x2="200" y2="320" class="grid"/>
+    <line x1="300" y1="0" x2="300" y2="320" class="grid"/>
+    <line x1="400" y1="0" x2="400" y2="320" class="grid"/>
+    
+    <!-- Axes -->
+    <line x1="0" y1="320" x2="400" y2="320" class="axis"/>
+    <line x1="0" y1="0" x2="0" y2="320" class="axis"/>
+    
+    <!-- Sample data points for different clusters -->
+    <!-- Cluster 0: High performers -->
+    <circle cx="320" cy="60" r="4" class="cluster-0"/>
+    <circle cx="340" cy="80" r="4" class="cluster-0"/>
+    <circle cx="360" cy="50" r="4" class="cluster-0"/>
+    <circle cx="350" cy="70" r="4" class="cluster-0"/>
+    
+    <!-- Cluster 1: Medium-high performers -->
+    <circle cx="220" cy="120" r="4" class="cluster-1"/>
+    <circle cx="240" cy="140" r="4" class="cluster-1"/>
+    <circle cx="260" cy="110" r="4" class="cluster-1"/>
+    <circle cx="250" cy="130" r="4" class="cluster-1"/>
+    
+    <!-- Cluster 2: Medium performers -->
+    <circle cx="120" cy="180" r="4" class="cluster-2"/>
+    <circle cx="140" cy="200" r="4" class="cluster-2"/>
+    <circle cx="160" cy="170" r="4" class="cluster-2"/>
+    <circle cx="150" cy="190" r="4" class="cluster-2"/>
+    
+    <!-- Cluster 3: Low performers -->
+    <circle cx="60" cy="260" r="4" class="cluster-3"/>
+    <circle cx="80" cy="280" r="4" class="cluster-3"/>
+    <circle cx="40" cy="270" r="4" class="cluster-3"/>
+    <circle cx="70" cy="290" r="4" class="cluster-3"/>
+    
+    <!-- Centroids -->
+    <circle cx="342" cy="65" r="6" class="centroid"/>
+    <circle cx="242" cy="125" r="6" class="centroid"/>
+    <circle cx="142" cy="185" r="6" class="centroid"/>
+    <circle cx="62" cy="275" r="6" class="centroid"/>
+    
+    <!-- Axis labels -->
+    <text x="200" y="340" class="axis-label">Engagement Score →</text>
+    <text x="-10" y="160" class="axis-label" transform="rotate(-90, -10, 160)">Activity Level →</text>
+    
+    <!-- Scale labels -->
+    <text x="0" y="335" class="axis-label">Low</text>
+    <text x="380" y="335" class="axis-label">High</text>
+    <text x="-25" y="320" class="axis-label">Low</text>
+    <text x="-25" y="10" class="axis-label">High</text>
+  </g>
+  
+  <!-- Legend -->
+  <g transform="translate(50, 450)">
+    <text x="0" y="0" class="subtitle">Cluster Segments:</text>
+    
+    <circle cx="10" cy="20" r="4" class="cluster-0"/>
+    <text x="20" y="25" class="legend-text">Cluster 0: Elite Athletes (High activity, high engagement)</text>
+    
+    <circle cx="10" cy="40" r="4" class="cluster-1"/>
+    <text x="20" y="45" class="legend-text">Cluster 1: Active Users (Good activity, moderate engagement)</text>
+    
+    <circle cx="10" cy="60" r="4" class="cluster-2"/>
+    <text x="20" y="65" class="legend-text">Cluster 2: Casual Users (Moderate activity, varying engagement)</text>
+    
+    <circle cx="10" cy="80" r="4" class="cluster-3"/>
+    <text x="20" y="85" class="legend-text">Cluster 3: Inactive Users (Low activity, low engagement)</text>
+    
+    <circle cx="10" cy="100" r="6" class="centroid"/>
+    <text x="20" y="105" class="legend-text">Centroids: Average characteristics of each cluster</text>
+  </g>
+  
+  <!-- Process Explanation -->
+  <g transform="translate(500, 450)">
+    <text x="0" y="0" class="subtitle">K-Means Process:</text>
+    <text x="0" y="20" class="legend-text">1. Initialize 4 random centroids</text>
+    <text x="0" y="35" class="legend-text">2. Assign users to nearest centroid</text>
+    <text x="0" y="50" class="legend-text">3. Update centroids to cluster mean</text>
+    <text x="0" y="65" class="legend-text">4. Repeat until convergence</text>
+    <text x="0" y="80" class="legend-text">5. Generate user segments</text>
+  </g>
+</svg>

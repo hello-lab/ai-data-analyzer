@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #2c3e50; }
+      .box { fill: #ecf0f1; stroke: #34495e; stroke-width: 2; rx: 8; }
+      .process-box { fill: #3498db; stroke: #2980b9; stroke-width: 2; rx: 8; }
+      .ml-box { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; rx: 8; }
+      .result-box { fill: #27ae60; stroke: #229954; stroke-width: 2; rx: 8; }
+      .text { font-family: Arial, sans-serif; font-size: 12px; fill: white; text-anchor: middle; }
+      .text-dark { font-family: Arial, sans-serif; font-size: 12px; fill: #2c3e50; text-anchor: middle; }
+      .arrow { fill: none; stroke: #7f8c8d; stroke-width: 2; marker-end: url(#arrowhead); }
+      .data-flow { font-family: Arial, sans-serif; font-size: 10px; fill: #7f8c8d; text-anchor: middle; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7f8c8d" />
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="500" y="30" class="title">AI Data Analytics Processing Pipeline</text>
+  
+  <!-- Data Input -->
+  <rect x="50" y="80" width="120" height="60" class="box"/>
+  <text x="110" y="105" class="text-dark">CSV Data Input</text>
+  <text x="110" y="120" class="data-flow">users.csv</text>
+  
+  <!-- Data Processing -->
+  <rect x="220" y="80" width="120" height="60" class="process-box"/>
+  <text x="280" y="105" class="text">Data Preprocessing</text>
+  <text x="280" y="120" class="text">Type Conversion</text>
+  
+  <!-- Feature Engineering -->
+  <rect x="390" y="80" width="120" height="60" class="process-box"/>
+  <text x="450" y="105" class="text">Feature Engineering</text>
+  <text x="450" y="120" class="text">4D Vectors</text>
+  
+  <!-- ML Algorithms -->
+  <rect x="200" y="200" width="150" height="60" class="ml-box"/>
+  <text x="275" y="220" class="text">K-Means Clustering</text>
+  <text x="275" y="235" class="text">(k=4 segments)</text>
+  
+  <rect x="400" y="200" width="150" height="60" class="ml-box"/>
+  <text x="475" y="220" class="text">Engagement Index</text>
+  <text x="475" y="235" class="text">Weighted Sum</text>
+  
+  <rect x="600" y="200" width="150" height="60" class="ml-box"/>
+  <text x="675" y="220" class="text">Outlier Detection</text>
+  <text x="675" y="235" class="text">Z-Score Analysis</text>
+  
+  <!-- Analytics -->
+  <rect x="200" y="320" width="140" height="60" class="process-box"/>
+  <text x="270" y="340" class="text">Activity Consistency</text>
+  <text x="270" y="355" class="text">Score Calculation</text>
+  
+  <rect x="400" y="320" width="140" height="60" class="process-box"/>
+  <text x="470" y="340" class="text">Correlation</text>
+  <text x="470" y="355" class="text">Analysis</text>
+  
+  <rect x="600" y="320" width="140" height="60" class="process-box"/>
+  <text x="670" y="340" class="text">Team Statistics</text>
+  <text x="670" y="355" class="text">&amp; Rankings</text>
+  
+  <!-- Results -->
+  <rect x="100" y="440" width="150" height="60" class="result-box"/>
+  <text x="175" y="465" class="text">User Segmentation</text>
+  <text x="175" y="480" class="text">&amp; Clustering</text>
+  
+  <rect x="300" y="440" width="150" height="60" class="result-box"/>
+  <text x="375" y="465" class="text">Personalized</text>
+  <text x="375" y="480" class="text">Recommendations</text>
+  
+  <rect x="500" y="440" width="150" height="60" class="result-box"/>
+  <text x="575" y="465" class="text">Performance</text>
+  <text x="575" y="480" class="text">Insights</text>
+  
+  <rect x="700" y="440" width="150" height="60" class="result-box"/>
+  <text x="775" y="465" class="text">Interactive</text>
+  <text x="775" y="480" class="text">Dashboard</text>
+  
+  <!-- Arrows -->
+  <line x1="170" y1="110" x2="210" y2="110" class="arrow"/>
+  <line x1="340" y1="110" x2="380" y2="110" class="arrow"/>
+  
+  <line x1="450" y1="140" x2="275" y2="190" class="arrow"/>
+  <line x1="450" y1="140" x2="475" y2="190" class="arrow"/>
+  <line x1="450" y1="140" x2="675" y2="190" class="arrow"/>
+  
+  <line x1="275" y1="260" x2="270" y2="310" class="arrow"/>
+  <line x1="475" y1="260" x2="470" y2="310" class="arrow"/>
+  <line x1="675" y1="260" x2="670" y2="310" class="arrow"/>
+  
+  <line x1="270" y1="380" x2="175" y2="430" class="arrow"/>
+  <line x1="470" y1="380" x2="375" y2="430" class="arrow"/>
+  <line x1="670" y1="380" x2="575" y2="430" class="arrow"/>
+  <line x1="670" y1="380" x2="775" y2="430" class="arrow"/>
+  
+  <!-- Data Flow Labels -->
+  <text x="190" y="100" class="data-flow">Raw Data</text>
+  <text x="360" y="100" class="data-flow">Clean Data</text>
+  <text x="530" y="100" class="data-flow">Features</text>
+  
+  <text x="350" y="170" class="data-flow">4D Vectors: [steps, pushups, squats, balance]</text>
+  
+</svg>
