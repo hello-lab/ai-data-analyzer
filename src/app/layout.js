@@ -5,11 +5,7 @@ export const metadata = {
   description: 'Advanced analytics dashboard with clustering, engagement metrics, and data visualization',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="font-sans">{children}</body>

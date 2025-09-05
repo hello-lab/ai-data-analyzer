@@ -27,36 +27,10 @@ ChartJS.register(
   LineElement
 );
 
-interface AnalyticsData {
-  summary: {
-    totalUsers: number;
-    totalTeams: number;
-    correlationBalanceStep: number;
-    clusters: Array<{
-      clusterId: number;
-      userCount: number;
-      centroid: {
-        stepcount: number;
-        pushup: number;
-        squat: number;
-        balance: number;
-      };
-    }>;
-  };
-  users: any[];
-  teamStats: any[];
-  topPerformers: {
-    engagement: any[];
-    consistency: any[];
-    outliers: any[];
-  };
-  statistics: any;
-}
-
 export default function Dashboard() {
-  const [data, setData] = useState<AnalyticsData | null>(null);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -71,7 +45,7 @@ export default function Dashboard() {
       const result = await response.json();
       setData(result);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error');
+      setError(err?.message || 'Unknown error');
     } finally {
       setLoading(false);
     }
@@ -153,7 +127,7 @@ export default function Dashboard() {
   const teamBarOptions = {
     responsive: true,
     interaction: {
-      mode: 'index' as const,
+      mode: 'index',
       intersect: false,
     },
     scales: {
@@ -165,18 +139,18 @@ export default function Dashboard() {
         }
       },
       y: {
-        type: 'linear' as const,
+        type: 'linear',
         display: true,
-        position: 'left' as const,
+        position: 'left',
         title: {
           display: true,
           text: 'Steps'
         }
       },
       y1: {
-        type: 'linear' as const,
+        type: 'linear',
         display: true,
-        position: 'right' as const,
+        position: 'right',
         title: {
           display: true,
           text: 'Pushups/Squats'
@@ -206,7 +180,7 @@ export default function Dashboard() {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: 'top',
       },
       title: {
         display: true,
@@ -250,7 +224,7 @@ export default function Dashboard() {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: 'top',
       },
       title: {
         display: true,
@@ -274,7 +248,7 @@ export default function Dashboard() {
   const teamCounts = data.users.reduce((acc, user) => {
     acc[user.team] = (acc[user.team] || 0) + 1;
     return acc;
-  }, {} as Record<string, number>);
+  }, {});
 
   const teamDistributionData = {
     labels: Object.keys(teamCounts),
@@ -430,25 +404,115 @@ export default function Dashboard() {
     ],
   };
 
-  // Recommended Pushup Goals by Cluster
-  const clusterRecommendations = data.summary.clusters.map(cluster => {
+  // Enhanced Target Goals by Cluster (multiple challenge types)
+  const clusterChallengeTypes = data.summary.clusters.map(cluster => {
     const clusterUsers = data.users.filter(u => u.cluster === cluster.clusterId);
+    const challengeTypes = clusterUsers.reduce((acc, user) => {
+      acc[user.primary_challenge] = (acc[user.primary_challenge] || 0) + 1;
+      return acc;
+    }, {});
+    
     return {
       clusterId: cluster.clusterId,
-      avgRecommended: clusterUsers.length > 0 ? 
-        clusterUsers.reduce((sum, u) => sum + u.recommended_pushup, 0) / clusterUsers.length : 0,
-      userCount: cluster.userCount
+      challengeTypes,
+      userCount: cluster.userCount,
+      avgSteps: clusterUsers.length > 0 ? 
+        clusterUsers.reduce((sum, u) => sum + u.recommended_steps, 0) / clusterUsers.length : 0,
+      avgPushups: clusterUsers.length > 0 ? 
+        clusterUsers.reduce((sum, u) => sum + u.recommended_pushups, 0) / clusterUsers.length : 0,
+      avgSquats: clusterUsers.length > 0 ? 
+        clusterUsers.reduce((sum, u) => sum + u.recommended_squats, 0) / clusterUsers.length : 0,
     };
   });
 
-  const recommendedPushupData = {
-    labels: clusterRecommendations.map(c => `Cluster ${c.clusterId}`),
+  const multiTargetData = {
+    labels: clusterChallengeTypes.map(c => `Cluster ${c.clusterId}`),
     datasets: [
       {
-        label: 'Recommended Pushup Goal',
-        data: clusterRecommendations.map(c => c.avgRecommended),
-        backgroundColor: 'rgba(255, 206, 86, 0.8)',
-        borderColor: 'rgba(255, 206, 86, 1)',
+        label: 'Recommended Steps',
+        data: clusterChallengeTypes.map(c => c.avgSteps),
+        backgroundColor: 'rgba(54, 162, 235, 0.8)',
+        yAxisID: 'y',
+      },
+      {
+        label: 'Recommended Pushups',
+        data: clusterChallengeTypes.map(c => c.avgPushups),
+        backgroundColor: 'rgba(255, 99, 132, 0.8)',
+        yAxisID: 'y1',
+      },
+      {
+        label: 'Recommended Squats', 
+        data: clusterChallengeTypes.map(c => c.avgSquats),
+        backgroundColor: 'rgba(75, 192, 192, 0.8)',
+        yAxisID: 'y1',
+      },
+    ],
+  };
+
+  const multiTargetOptions = {
+    responsive: true,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    scales: {
+      x: {
+        display: true,
+        title: {
+          display: true,
+          text: 'Clusters'
+        }
+      },
+      y: {
+        type: 'linear',
+        display: true,
+        position: 'left',
+        title: {
+          display: true,
+          text: 'Steps Target'
+        }
+      },
+      y1: {
+        type: 'linear',
+        display: true,
+        position: 'right',
+        title: {
+          display: true,
+          text: 'Pushups/Squats Target'
+        },
+        grid: {
+          drawOnChartArea: false,
+        },
+      },
+    },
+  };
+
+  // Challenge Type Distribution
+  const allChallengeTypes = data.users.reduce((acc, user) => {
+    acc[user.primary_challenge] = (acc[user.primary_challenge] || 0) + 1;
+    return acc;
+  }, {});
+
+  const challengeTypeData = {
+    labels: Object.keys(allChallengeTypes).map(key => 
+      key.charAt(0).toUpperCase() + key.slice(1) + ' Challenge'
+    ),
+    datasets: [
+      {
+        label: 'Users by Challenge Type',
+        data: Object.values(allChallengeTypes),
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.8)',
+          'rgba(255, 99, 132, 0.8)',
+          'rgba(75, 192, 192, 0.8)',
+          'rgba(255, 206, 86, 0.8)',
+        ],
+        borderColor: [
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(255, 206, 86, 1)',
+        ],
         borderWidth: 1,
       },
     ],
@@ -593,69 +657,103 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Recommended Challenges Section */}
+        {/* Enhanced Recommended Challenges Section */}
         <div className="bg-white rounded-lg shadow p-6 mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6">AI-Powered Recommended Challenges</h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">AI-Powered Personalized Challenges with Deadlines</h2>
           
-          {/* Cluster Recommendations Chart */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold text-gray-700 mb-4">Recommended Pushup Goals by Cluster</h3>
-            <div className="h-64">
-              <Bar data={recommendedPushupData} options={{ 
-                responsive: true, 
-                maintainAspectRatio: false,
-                plugins: {
-                  title: {
-                    display: true,
-                    text: 'AI-Generated Pushup Goals Based on Cluster Analysis'
-                  }
-                },
-                scales: {
-                  y: {
-                    title: {
-                      display: true,
-                      text: 'Recommended Pushups'
-                    }
-                  }
-                }
-              }} />
+          {/* Challenge Type Distribution */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-700 mb-4">Challenge Type Distribution</h3>
+              <div className="h-64">
+                <Pie data={challengeTypeData} options={{ responsive: true, maintainAspectRatio: false }} />
+              </div>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-700 mb-4">Multi-Target Goals by Cluster</h3>
+              <div className="h-64">
+                <Bar data={multiTargetData} options={{ ...multiTargetOptions, maintainAspectRatio: false }} />
+              </div>
             </div>
           </div>
 
-          {/* Individual User Recommendations */}
+          {/* Individual User Challenges with Deadlines */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-700 mb-4">Individual User Challenges</h3>
+            <h3 className="text-lg font-semibold text-gray-700 mb-4">Individual Challenges & Deadlines</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-h-96 overflow-y-auto">
               {data.users
                 .sort((a, b) => b.engagement_index - a.engagement_index)
-                .slice(0, 20)
-                .map((user, idx) => (
-                <div key={idx} className="border rounded-lg p-4 bg-gradient-to-br from-blue-50 to-indigo-50">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-gray-800">{user.username}</h4>
-                    <span className="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded">
-                      Cluster {user.cluster}
-                    </span>
-                  </div>
-                  <div className="space-y-1 text-sm text-gray-600">
-                    <p><span className="font-medium">Team:</span> {user.team}</p>
-                    <p><span className="font-medium">Current Pushups:</span> {user.pushup}</p>
-                    <p className="text-indigo-700 font-semibold">
-                      <span className="font-medium">🎯 Goal:</span> {user.recommended_pushup} pushups
-                    </p>
-                    <p><span className="font-medium">Similar to:</span> {user.similar_user}</p>
-                    <div className="mt-2 pt-2 border-t border-indigo-200">
-                      <p className="text-xs text-indigo-600">
-                        Engagement: {user.engagement_index.toFixed(1)}
-                      </p>
+                .slice(0, 24)
+                .map((user, idx) => {
+                  const challengeColors = {
+                    steps: 'from-blue-50 to-blue-100 border-blue-200',
+                    pushups: 'from-red-50 to-red-100 border-red-200', 
+                    squats: 'from-green-50 to-green-100 border-green-200',
+                    overall: 'from-purple-50 to-purple-100 border-purple-200'
+                  };
+                  
+                  const challengeIcons = {
+                    steps: '🚶',
+                    pushups: '💪',
+                    squats: '🏋️',
+                    overall: '🎯'
+                  };
+
+                  return (
+                    <div key={idx} className={`border rounded-lg p-4 bg-gradient-to-br ${challengeColors[user.primary_challenge] || challengeColors.overall}`}>
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold text-gray-800 text-sm">{user.username}</h4>
+                        <span className="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded">
+                          C{user.cluster}
+                        </span>
+                      </div>
+                      
+                      <div className="space-y-1 text-xs text-gray-600 mb-3">
+                        <p><span className="font-medium">Team:</span> {user.team}</p>
+                        <div className="mt-2 p-2 bg-white/50 rounded border">
+                          <p className="font-semibold text-gray-800 flex items-center">
+                            {challengeIcons[user.primary_challenge]} {user.challenge_description}
+                          </p>
+                          <div className="grid grid-cols-3 gap-1 mt-2 text-xs">
+                            <div className="text-center">
+                              <p className="font-medium">Steps</p>
+                              <p className="text-blue-600">{user.stepcount}</p>
+                              <p className="text-blue-800 font-semibold">→ {user.recommended_steps}</p>
+                            </div>
+                            <div className="text-center">
+                              <p className="font-medium">Push</p>
+                              <p className="text-red-600">{user.pushup}</p>
+                              <p className="text-red-800 font-semibold">→ {user.recommended_pushups}</p>
+                            </div>
+                            <div className="text-center">
+                              <p className="font-medium">Squat</p>
+                              <p className="text-green-600">{user.squat}</p>
+                              <p className="text-green-800 font-semibold">→ {user.recommended_squats}</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="mt-2 p-2 bg-yellow-50 rounded border border-yellow-200">
+                          <p className="font-semibold text-yellow-800 text-xs">
+                            ⏰ Deadline: {user.challenge_deadline} ({user.deadline_days} days)
+                          </p>
+                          <p className="text-xs text-yellow-700 mt-1">
+                            {user.deadline_reason}
+                          </p>
+                        </div>
+                        
+                        <p className="mt-2"><span className="font-medium">Similar to:</span> {user.similar_user}</p>
+                        <p className="text-indigo-600">
+                          Engagement: {user.engagement_index.toFixed(1)}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
+                  );
+                })}
             </div>
             <div className="mt-4 text-center">
               <p className="text-sm text-gray-600">
-                Showing top 20 users by engagement. AI recommendations based on cluster analysis and peer performance.
+                Showing top 24 users by engagement. AI recommendations include multiple challenge types with personalized deadlines based on performance data.
               </p>
             </div>
           </div>
