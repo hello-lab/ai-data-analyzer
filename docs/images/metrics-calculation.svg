@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #2c3e50; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #34495e; }
+      .metric-box { fill: #3498db; stroke: #2980b9; stroke-width: 2; rx: 8; }
+      .calc-box { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; rx: 8; }
+      .result-box { fill: #27ae60; stroke: #229954; stroke-width: 2; rx: 8; }
+      .data-box { fill: #f39c12; stroke: #d68910; stroke-width: 2; rx: 8; }
+      .text { font-family: Arial, sans-serif; font-size: 12px; fill: white; text-anchor: middle; }
+      .formula { font-family: 'Courier New', monospace; font-size: 10px; fill: white; text-anchor: middle; }
+      .arrow { fill: none; stroke: #7f8c8d; stroke-width: 2; marker-end: url(#arrowhead); }
+      .example-text { font-family: Arial, sans-serif; font-size: 10px; fill: #2c3e50; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7f8c8d" />
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="500" y="30" class="title">Feature Engineering &amp; Metrics Calculation</text>
+  
+  <!-- Raw Data Input -->
+  <rect x="50" y="80" width="150" height="80" class="data-box"/>
+  <text x="125" y="105" class="text">Raw User Data</text>
+  <text x="125" y="125" class="text">stepcount: 10000</text>
+  <text x="125" y="140" class="text">pushup: 150</text>
+  <text x="125" y="155" class="text">squat: 80, balance: 120</text>
+  
+  <!-- Feature Vector Creation -->
+  <rect x="250" y="80" width="150" height="80" class="metric-box"/>
+  <text x="325" y="105" class="text">Feature Vector</text>
+  <text x="325" y="125" class="text">[10000, 150, 80, 120]</text>
+  <text x="325" y="140" class="text">4D Space</text>
+  <text x="325" y="155" class="text">For ML Algorithms</text>
+  
+  <!-- Engagement Index Calculation -->
+  <rect x="50" y="220" width="200" height="100" class="calc-box"/>
+  <text x="150" y="245" class="text">Engagement Index</text>
+  <text x="150" y="265" class="formula">steps×0.4 + pushup×0.2</text>
+  <text x="150" y="280" class="formula">+ squat×0.2 + balance×0.2</text>
+  <text x="150" y="300" class="text">= 10000×0.4 + 150×0.2</text>
+  <text x="150" y="315" class="text">+ 80×0.2 + 120×0.2 = 4070</text>
+  
+  <!-- Activity Consistency Score -->
+  <rect x="300" y="220" width="200" height="100" class="calc-box"/>
+  <text x="400" y="245" class="text">Activity Consistency</text>
+  <text x="400" y="265" class="formula">activities = [10000, 150, 80]</text>
+  <text x="400" y="280" class="formula">mean = 3410, stddev = 5713</text>
+  <text x="400" y="295" class="formula">consistency = 1/(1+stddev)</text>
+  <text x="400" y="310" class="text">= 1/(1+5713) = 0.00017</text>
+  
+  <!-- Z-Score Outlier Detection -->
+  <rect x="550" y="220" width="200" height="100" class="calc-box"/>
+  <text x="650" y="245" class="text">Outlier Detection</text>
+  <text x="650" y="265" class="formula">z = (value - mean) / stddev</text>
+  <text x="650" y="280" class="text">For each metric:</text>
+  <text x="650" y="295" class="formula">|z| > 3 → Outlier</text>
+  <text x="650" y="310" class="text">Flag: 0 or 1</text>
+  
+  <!-- Correlation Analysis -->
+  <rect x="800" y="220" width="150" height="100" class="calc-box"/>
+  <text x="875" y="245" class="text">Correlation</text>
+  <text x="875" y="265" class="text">Balance vs Steps</text>
+  <text x="875" y="280" class="formula">r = Σ(x-x̄)(y-ȳ)</text>
+  <text x="875" y="295" class="formula">/ √[Σ(x-x̄)²Σ(y-ȳ)²]</text>
+  <text x="875" y="310" class="text">Range: -1 to +1</text>
+  
+  <!-- Distance Calculation for Similarity -->
+  <rect x="100" y="380" width="200" height="100" class="calc-box"/>
+  <text x="200" y="405" class="text">User Similarity</text>
+  <text x="200" y="425" class="formula">distance = √Σ(ai - bi)²</text>
+  <text x="200" y="440" class="text">Euclidean distance between</text>
+  <text x="200" y="455" class="text">feature vectors</text>
+  <text x="200" y="470" class="text">Nearest neighbor matching</text>
+  
+  <!-- Statistical Analysis -->
+  <rect x="350" y="380" width="200" height="100" class="calc-box"/>
+  <text x="450" y="405" class="text">Statistical Summary</text>
+  <text x="450" y="425" class="text">For each metric:</text>
+  <text x="450" y="440" class="text">Mean, Median, Min, Max</text>
+  <text x="450" y="455" class="text">Standard Deviation</text>
+  <text x="450" y="470" class="text">Percentiles &amp; Quartiles</text>
+  
+  <!-- Team Analytics -->
+  <rect x="600" y="380" width="200" height="100" class="calc-box"/>
+  <text x="700" y="405" class="text">Team Analytics</text>
+  <text x="700" y="425" class="text">Group by team</text>
+  <text x="700" y="440" class="text">Average metrics</text>
+  <text x="700" y="455" class="text">Team rankings</text>
+  <text x="700" y="470" class="text">Performance comparison</text>
+  
+  <!-- Final Results -->
+  <rect x="150" y="540" width="150" height="60" class="result-box"/>
+  <text x="225" y="565" class="text">User Profiles</text>
+  <text x="225" y="580" class="text">&amp; Segmentation</text>
+  
+  <rect x="350" y="540" width="150" height="60" class="result-box"/>
+  <text x="425" y="565" class="text">Performance</text>
+  <text x="425" y="580" class="text">Rankings</text>
+  
+  <rect x="550" y="540" width="150" height="60" class="result-box"/>
+  <text x="625" y="565" class="text">Personalized</text>
+  <text x="625" y="580" class="text">Recommendations</text>
+  
+  <!-- Arrows -->
+  <line x1="200" y1="120" x2="240" y2="120" class="arrow"/>
+  <line x1="325" y1="160" x2="150" y2="210" class="arrow"/>
+  <line x1="325" y1="160" x2="400" y2="210" class="arrow"/>
+  <line x1="325" y1="160" x2="650" y2="210" class="arrow"/>
+  <line x1="325" y1="160" x2="875" y2="210" class="arrow"/>
+  
+  <line x1="150" y1="320" x2="200" y2="370" class="arrow"/>
+  <line x1="400" y1="320" x2="450" y2="370" class="arrow"/>
+  <line x1="650" y1="320" x2="700" y2="370" class="arrow"/>
+  
+  <line x1="200" y1="480" x2="225" y2="530" class="arrow"/>
+  <line x1="450" y1="480" x2="425" y2="530" class="arrow"/>
+  <line x1="700" y1="480" x2="625" y2="530" class="arrow"/>
+  
+  <!-- Example Values Box -->
+  <rect x="50" y="620" width="900" height="70" style="fill: #ecf0f1; stroke: #bdc3c7; stroke-width: 1; rx: 8;"/>
+  <text x="70" y="640" class="example-text"><tspan style="font-weight: bold;">Example Calculation Results:</tspan></text>
+  <text x="70" y="655" class="example-text">User "alice": Engagement=4070, Consistency=0.00017, Cluster=0 (Elite), Outlier=No, Similar to "george"</text>
+  <text x="70" y="670" class="example-text">Balance-Steps Correlation=0.95 (Strong positive), Team A Average Engagement=2770</text>
+</svg>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #2c3e50; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #34495e; }
+      .component-box { fill: #3498db; stroke: #2980b9; stroke-width: 2; rx: 10; }
+      .data-layer { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; rx: 10; }
+      .ml-layer { fill: #f39c12; stroke: #d68910; stroke-width: 2; rx: 10; }
+      .ui-layer { fill: #27ae60; stroke: #229954; stroke-width: 2; rx: 10; }
+      .api-layer { fill: #9b59b6; stroke: #8e44ad; stroke-width: 2; rx: 10; }
+      .text { font-family: Arial, sans-serif; font-size: 12px; fill: white; text-anchor: middle; }
+      .layer-text { font-family: Arial, sans-serif; font-size: 11px; fill: white; text-anchor: middle; }
+      .arrow { fill: none; stroke: #7f8c8d; stroke-width: 2; marker-end: url(#arrowhead); }
+      .bidirectional { stroke-dasharray: 5,5; }
+      .flow-label { font-family: Arial, sans-serif; font-size: 10px; fill: #7f8c8d; text-anchor: middle; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7f8c8d" />
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="600" y="30" class="title">AI Data Analyzer - System Architecture</text>
+  <text x="600" y="55" class="subtitle">Full-Stack Analytics Platform with Machine Learning</text>
+  
+  <!-- Data Layer -->
+  <g transform="translate(50, 100)">
+    <text x="0" y="-10" class="subtitle">Data Layer</text>
+    
+    <rect x="0" y="0" width="150" height="80" class="data-layer"/>
+    <text x="75" y="25" class="text">CSV Data Store</text>
+    <text x="75" y="40" class="layer-text">users.csv</text>
+    <text x="75" y="55" class="layer-text">Raw user metrics</text>
+    <text x="75" y="70" class="layer-text">Fitness &amp;amp; balance data</text>
+    
+    <rect x="200" y="0" width="150" height="80" class="data-layer"/>
+    <text x="275" y="25" class="text">Data Ingestion</text>
+    <text x="275" y="40" class="layer-text">csv-parser</text>
+    <text x="275" y="55" class="layer-text">Stream processing</text>
+    <text x="275" y="70" class="layer-text">Type validation</text>
+  </g>
+  
+  <!-- ML Processing Layer -->
+  <g transform="translate(50, 250)">
+    <text x="0" y="-10" class="subtitle">Machine Learning Layer</text>
+    
+    <rect x="0" y="0" width="120" height="100" class="ml-layer"/>
+    <text x="60" y="25" class="text">Feature</text>
+    <text x="60" y="40" class="text">Engineering</text>
+    <text x="60" y="60" class="layer-text">4D vectors</text>
+    <text x="60" y="75" class="layer-text">Normalization</text>
+    <text x="60" y="90" class="layer-text">Data cleaning</text>
+    
+    <rect x="140" y="0" width="120" height="100" class="ml-layer"/>
+    <text x="200" y="25" class="text">K-Means</text>
+    <text x="200" y="40" class="text">Clustering</text>
+    <text x="200" y="60" class="layer-text">ml-kmeans</text>
+    <text x="200" y="75" class="layer-text">4 clusters</text>
+    <text x="200" y="90" class="layer-text">User segmentation</text>
+    
+    <rect x="280" y="0" width="120" height="100" class="ml-layer"/>
+    <text x="340" y="25" class="text">Metrics</text>
+    <text x="340" y="40" class="text">Calculation</text>
+    <text x="340" y="60" class="layer-text">Engagement index</text>
+    <text x="340" y="75" class="layer-text">Consistency scores</text>
+    <text x="340" y="90" class="layer-text">Statistical analysis</text>
+    
+    <rect x="420" y="0" width="120" height="100" class="ml-layer"/>
+    <text x="480" y="25" class="text">Outlier</text>
+    <text x="480" y="40" class="text">Detection</text>
+    <text x="480" y="60" class="layer-text">Z-score analysis</text>
+    <text x="480" y="75" class="layer-text">Anomaly flagging</text>
+    <text x="480" y="90" class="layer-text">Statistical validation</text>
+  </g>
+  
+  <!-- Analytics &amp; Processing Layer -->
+  <g transform="translate(600, 250)">
+    <text x="0" y="-10" class="subtitle">Analytics Layer</text>
+    
+    <rect x="0" y="0" width="120" height="100" class="component-box"/>
+    <text x="60" y="25" class="text">Correlation</text>
+    <text x="60" y="40" class="text">Analysis</text>
+    <text x="60" y="60" class="layer-text">Balance vs Steps</text>
+    <text x="60" y="75" class="layer-text">Pearson correlation</text>
+    <text x="60" y="90" class="layer-text">Pattern detection</text>
+    
+    <rect x="140" y="0" width="120" height="100" class="component-box"/>
+    <text x="200" y="25" class="text">Team</text>
+    <text x="200" y="40" class="text">Analytics</text>
+    <text x="200" y="60" class="layer-text">Group statistics</text>
+    <text x="200" y="75" class="layer-text">Performance ranking</text>
+    <text x="200" y="90" class="layer-text">Comparison metrics</text>
+    
+    <rect x="280" y="0" width="120" height="100" class="component-box"/>
+    <text x="340" y="25" class="text">Similarity</text>
+    <text x="340" y="40" class="text">Matching</text>
+    <text x="340" y="60" class="layer-text">Euclidean distance</text>
+    <text x="340" y="75" class="layer-text">Nearest neighbors</text>
+    <text x="340" y="90" class="layer-text">User recommendations</text>
+  </g>
+  
+  <!-- API Layer -->
+  <g transform="translate(300, 400)">
+    <text x="0" y="-10" class="subtitle">API Layer</text>
+    
+    <rect x="0" y="0" width="200" height="80" class="api-layer"/>
+    <text x="100" y="25" class="text">Next.js API Routes</text>
+    <text x="100" y="40" class="layer-text">/api/analytics endpoint</text>
+    <text x="100" y="55" class="layer-text">RESTful JSON responses</text>
+    <text x="100" y="70" class="layer-text">Real-time processing</text>
+    
+    <rect x="250" y="0" width="200" height="80" class="api-layer"/>
+    <text x="350" y="25" class="text">Data Aggregation</text>
+    <text x="350" y="40" class="layer-text">lodash utilities</text>
+    <text x="350" y="55" class="layer-text">Result formatting</text>
+    <text x="350" y="70" class="layer-text">Performance optimization</text>
+  </g>
+  
+  <!-- UI/Visualization Layer -->
+  <g transform="translate(200, 550)">
+    <text x="0" y="-10" class="subtitle">Presentation Layer</text>
+    
+    <rect x="0" y="0" width="140" height="100" class="ui-layer"/>
+    <text x="70" y="25" class="text">React Dashboard</text>
+    <text x="70" y="45" class="layer-text">Next.js 15 + React 19</text>
+    <text x="70" y="60" class="layer-text">Responsive design</text>
+    <text x="70" y="75" class="layer-text">Tailwind CSS</text>
+    <text x="70" y="90" class="layer-text">Real-time updates</text>
+    
+    <rect x="160" y="0" width="140" height="100" class="ui-layer"/>
+    <text x="230" y="25" class="text">Chart.js</text>
+    <text x="230" y="40" class="text">Visualizations</text>
+    <text x="230" y="60" class="layer-text">Interactive charts</text>
+    <text x="230" y="75" class="layer-text">Scatter plots</text>
+    <text x="230" y="90" class="layer-text">Histograms &amp; bars</text>
+    
+    <rect x="320" y="0" width="140" height="100" class="ui-layer"/>
+    <text x="390" y="25" class="text">Data Tables</text>
+    <text x="390" y="40" class="text">&amp; Insights</text>
+    <text x="390" y="60" class="layer-text">Top performers</text>
+    <text x="390" y="75" class="layer-text">Team statistics</text>
+    <text x="390" y="90" class="layer-text">Key metrics</text>
+    
+    <rect x="480" y="0" width="140" height="100" class="ui-layer"/>
+    <text x="550" y="25" class="text">User Experience</text>
+    <text x="550" y="45" class="layer-text">Hover interactions</text>
+    <text x="550" y="60" class="layer-text">Detailed tooltips</text>
+    <text x="550" y="75" class="layer-text">Mobile responsive</text>
+    <text x="550" y="90" class="layer-text">Performance optimized</text>
+  </g>
+  
+  <!-- Data Flow Arrows -->
+  <!-- Data to ML -->
+  <line x1="275" y1="180" x2="275" y2="240" class="arrow"/>
+  <text x="285" y="210" class="flow-label">Raw Data</text>
+  
+  <!-- ML internal flow -->
+  <line x1="170" y1="300" x2="190" y2="300" class="arrow"/>
+  <line x1="260" y1="300" x2="270" y2="300" class="arrow"/>
+  <line x1="400" y1="300" x2="410" y2="300" class="arrow"/>
+  
+  <!-- ML to Analytics -->
+  <line x1="540" y1="300" x2="590" y2="300" class="arrow"/>
+  <text x="565" y="285" class="flow-label">Processed Features</text>
+  
+  <!-- Analytics to API -->
+  <line x1="720" y1="350" x2="400" y2="390" class="arrow"/>
+  <text x="560" y="370" class="flow-label">Analysis Results</text>
+  
+  <!-- API to UI -->
+  <line x1="400" y1="480" x2="370" y2="540" class="arrow"/>
+  <text x="385" y="510" class="flow-label">JSON API</text>
+  
+  <!-- Technology Stack Labels -->
+  <g transform="translate(950, 150)">
+    <text x="0" y="0" class="subtitle">Technology Stack:</text>
+    <text x="0" y="25" style="font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50;">• Node.js + Next.js 15</text>
+    <text x="0" y="40" style="font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50;">• React 19 + TypeScript</text>
+    <text x="0" y="55" style="font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50;">• ml-kmeans clustering</text>
+    <text x="0" y="70" style="font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50;">• Chart.js visualizations</text>
+    <text x="0" y="85" style="font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50;">• Tailwind CSS styling</text>
+    <text x="0" y="100" style="font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50;">• lodash data utilities</text>
+    <text x="0" y="115" style="font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50;">• csv-parser ingestion</text>
+  </g>
+  
+  <!-- Key Features -->
+  <g transform="translate(950, 300)">
+    <text x="0" y="0" class="subtitle">Key Features:</text>
+    <text x="0" y="25" style="font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50;">• Real-time analytics</text>
+    <text x="0" y="40" style="font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50;">• ML-powered insights</text>
+    <text x="0" y="55" style="font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50;">• Interactive dashboard</text>
+    <text x="0" y="70" style="font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50;">• User segmentation</text>
+    <text x="0" y="85" style="font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50;">• Performance tracking</text>
+    <text x="0" y="100" style="font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50;">• Team analytics</text>
+    <text x="0" y="115" style="font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50;">• Outlier detection</text>
+  </g>
+</svg>

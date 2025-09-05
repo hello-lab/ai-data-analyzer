@@ -2,6 +2,35 @@
 
 A comprehensive Next.js application that analyzes user data with advanced AI metrics and provides beautiful data visualizations.
 
+## How the AI Model Works
+
+Our AI data analyzer uses machine learning algorithms to process user fitness data and generate actionable insights. Below are visual explanations of the data processing pipeline and model architecture.
+
+### System Architecture Overview
+![System Architecture](docs/images/system-architecture.svg)
+
+The platform follows a multi-layered architecture with distinct separation between data ingestion, machine learning processing, analytics, API services, and presentation layers.
+
+### Data Processing Pipeline
+![Data Processing Pipeline](docs/images/data-processing-pipeline.svg)
+
+The system processes raw CSV data through multiple stages: preprocessing, feature engineering, machine learning algorithms, statistical analysis, and result aggregation.
+
+### Detailed Workflow
+![Workflow Diagram](docs/images/workflow-diagram.svg)
+
+This flowchart shows the complete step-by-step process from data loading to final dashboard visualization, including all ML algorithms and analytics calculations.
+
+### K-Means Clustering Visualization
+![K-Means Clustering](docs/images/kmeans-clustering.svg)
+
+Our K-means algorithm segments users into 4 distinct clusters based on their activity patterns. Each cluster represents a different user persona: Elite Athletes, Active Users, Casual Users, and Inactive Users.
+
+### Metrics Calculation Process
+![Metrics Calculation](docs/images/metrics-calculation.svg)
+
+This diagram explains how we calculate key metrics like engagement index, activity consistency scores, outlier detection using z-scores, and correlation analysis.
+
 ## Features
 
 ### Analytics Engine
