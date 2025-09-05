@@ -1,8 +1,27 @@
 {
+  "name": "ai-data-analyzer",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "analyze": "node index.js"
+  },
   "dependencies": {
+    "chart.js": "^4.5.0",
     "csv-parser": "^3.2.0",
     "json2csv": "^6.0.0-alpha.2",
     "lodash": "^4.17.21",
-    "ml-kmeans": "^6.0.0"
+    "ml-kmeans": "^6.0.0",
+    "next": "^15.5.2",
+    "react": "^19.1.1",
+    "react-chartjs-2": "^5.3.0",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^15.5.2"
   }
 }
